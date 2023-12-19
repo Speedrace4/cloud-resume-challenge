@@ -11,7 +11,7 @@ Resources:
       Policies:
         DynamoDBCrudPolicy:
           TableName: cloud-resume-challenge
-      CodeUri: s3://aws-sam-cli-managed-default-samclisourcebucket-5fex9sf29jjc/sam-app/a6e052e245bfc1181297faccedde17b7
+      CodeUri: get-function/
       Handler: app.lambda_handler
       Runtime: python3.9
       Architectures:
