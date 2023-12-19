@@ -28,4 +28,4 @@ jobs:
           sam build
       - name: SAM Deploy
         run: |
-          sam deploy --stack-name sam-app --no-fail-on-empty-changeset
+          sam deploy --debug --stack-name sam-app --no-fail-on-empty-changeset
