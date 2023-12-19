@@ -1,0 +1,56 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: "cloud-resume-challenge"
+Globals:
+  Function:
+    Timeout: 3
+Resources:
+  GetCountFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Policies:
+        DynamoDBCrudPolicy:
+          TableName: cloud-resume-challenge
+      CodeUri: s3://aws-sam-cli-managed-default-samclisourcebucket-5fex9sf29jjc/sam-app/a6e052e245bfc1181297faccedde17b7
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Architectures:
+      - x86_64
+      Events:
+        IncrementCount:
+          Type: HttpApi
+          Properties:
+            Path: /get
+            Method: get
+    Metadata:
+      SamResourceId: GetCountFunction
+  DynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: cloud-resume-challenge
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+      - AttributeName: stat
+        AttributeType: S
+      KeySchema:
+      - AttributeName: stat
+        KeyType: HASH
+    Metadata:
+      SamResourceId: DynamoDBTable
+Outputs:
+  ViewCounterAPI:
+    Description: API Gateway for resume view counter
+    Value:
+      Fn::Sub: https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/get
+  GetCountFunction:
+    Description: GetCountFunction Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - GetCountFunction
+      - Arn
+  GetCountFunctionIamRole:
+    Description: Implicit IAM Role created for GetCountFunction
+    Value:
+      Fn::GetAtt:
+      - GetCountFunctionRole
+      - Arn
