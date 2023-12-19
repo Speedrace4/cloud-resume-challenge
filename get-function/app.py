@@ -3,7 +3,7 @@ import json, boto3
 client = boto3.client('dynamodb')
 TableName = 'cloud-resume-challenge'
 
-#Lambda Function
+#Lambda Function here
 def lambda_handler(event, context):
     response = client.update_item(
             TableName='cloud-resume-challenge',
