@@ -1,0 +1,39 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.skills-title {
+    display: flex;
+    flex-direction: column;
+}
+
+.skills {
+    display: flex;
+    flex-direction: column;
+}
+
+.all-skills {
+    display: flex;
+    gap: 16px;
+}
+
+.experienceheader {
+    display: flex;
+    justify-content: space-between;
+}
+
+body {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+p {
+    margin: 0;
+}
