@@ -20,9 +20,9 @@ def lambda_handler(event, context):
     return {      
             'statusCode': 200,
             "headers": {
-                        'Access-Control-Allow-Origin' : '*',
-                        'Access-Control-Allow-Headers': '*',
-                        'Access-Control-Allow-Credentials': '*',
-                        'Content-Type': 'application/json'
+            'Access-Control-Allow-Origin' : 'http://cloud-resume-challenge44.s3-website.us-east-2.amazonaws.com',
+            'Access-Control-Allow-Headers':'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+            'Access-Control-Allow-Credentials' : True,
+            'Content-Type': 'application/json'
                         },
             'body': json.dumps(value)}
