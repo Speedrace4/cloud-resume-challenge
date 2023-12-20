@@ -5,6 +5,54 @@ Globals:
   Function:
     Timeout: 3
 Resources:
+  MyWebsite:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      AccessControl: PublicRead
+      WebsiteConfiguration:
+        IndexDocument: index.html
+      BucketName: cloud-resume-challenge44
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      PolicyDocument:
+        Id: WebPolicy
+        Version: 2012-10-17
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: "*"
+            Action: "s3:GetObject"
+            Resource: !Join
+              - ""
+              - - "arn:aws:s3:::"
+                - !Ref MyWebsite
+                - /*
+      Bucket: !Ref MyWebsite
+  CloudFrontOriginAccessIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: "Serverless website in S3"
+  MyDistribution:
+    Type: "AWS::CloudFront::Distribution"
+    Properties:
+      DistributionConfig:
+        DefaultCacheBehavior:
+          ViewerProtocolPolicy: allow-all
+          TargetOriginId: cloud-resume-challenge44.s3-website.us-east-2.amazonaws.com
+          DefaultTTL: 0
+          MinTTL: 0
+          MaxTTL: 0
+          ForwardedValues:
+            QueryString: false
+        Origins:
+          - DomainName: cloud-resume-challenge44.s3-website.us-east-2.amazonaws.com
+            Id: cloud-resume-challenge44.s3-website.us-east-2.amazonaws.com
+            CustomOriginConfig:
+              OriginProtocolPolicy: match-viewer
+        Enabled: "true"
+        DefaultRootObject: index.html
   GetCountFunction:
     Type: AWS::Serverless::Function
     Properties:
